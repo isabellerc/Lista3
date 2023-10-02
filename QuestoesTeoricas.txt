@@ -1,0 +1,33 @@
+1)O princípio que estava sendo ferido em nossa API era o Princípio da Responsabilidade Única.
+No início da disciplina, percebemos que nossa API estava sobrecarregada com muitas responsabilidades, o que tornava o código difícil de
+manter e de entender. Para corrigir isso, começamos a adotar a prática de separar essas responsabilidades em diferentes camadas do projeto.
+
+
+2) As camadas em que dividimos nosso projeto desempenham os seguintes papéis:
+
+- Camada de Domain:
+Responsável pelas regras de negócio do sistema.
+Contém as entidades e objetos de valor que representam conceitos do domínio do problema.
+Não deve conter lógica relacionada à persistência ou à interação com a interface do usuário.
+
+- Camada de Data:
+Responsável pela persistência de dados.
+Contém classes e componentes relacionados ao acesso ao banco de dados ou armazenamento de dados.
+Deve ser independente das outras camadas, permitindo a troca de mecanismos de armazenamento sem afetar o restante do sistema.
+
+- Camada de Application:
+Responsável pela lógica de aplicação que coordena o fluxo de trabalho do sistema.
+Pode conter serviços, controladores e outros componentes que lidam com a interação entre as camadas Domain e Data.
+Não deve conter regras de negócio detalhadas, que pertencem à camada de Domain.
+
+- Camada de API:
+Responsável por fornecer interfaces para interagir com o sistema, geralmente expostas via HTTP ou outros protocolos.
+Converte solicitações da interface do usuário em chamadas para a camada de Application e vice-versa.
+Lida com validações, autorizações e respostas para o cliente.
+
+3) Na camada de Domain, criar classes com propriedades que possuem apenas setters privados é conhecido como encapsulamento de dados.
+A vantagem disso é garantir que o estado interno dessas classes só possa ser modificado por métodos controlados pela própria classe.
+
+
+4) A injeção de dependência permite que componentes dependam de abstrações em vez de implementações concretas. Isso oferece as seguintes
+vantagens: Desacoplamento, testabilidade, reutilização de código, troca fácil de implementações.

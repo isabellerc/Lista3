@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GestaoDeProduto.Data\GestaoDeProduto.Data.csproj" />
+    <ProjectReference Include="..\GestaoDeProduto.Domain\GestaoDeProduto.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
