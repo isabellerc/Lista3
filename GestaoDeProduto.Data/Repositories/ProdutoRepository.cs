@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace GestaoDeProduto.Data.Repositories
 {
     public class ProdutoRepository : IProdutoRepository //neste momento vou falar o que eu preciso fazer
@@ -16,43 +17,75 @@ namespace GestaoDeProduto.Data.Repositories
 
         public ProdutoRepository()
         {
-            _produtoCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(),
-                "FileJsonData", "produto.json");
+            _produtoCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(), "FileJsonData", "produto.json");
         }
 
         #endregion
 
-        #region - Funções do repositorio
-        public void Adicionar(Produto novoProduto)
+        #region - Funções do arquivo
+        public Task<IEnumerable<Produto>> ObterTodos()
         {
-            List<Produto> produtos = new List<Produto>();
+            List<Produto> produtos = LerProdutosDoArquivo();
+            return Task.FromResult<IEnumerable<Produto>>(produtos);
+        }
+
+        public async Task<Produto> ObterPorId(int id)
+        {
+            List<Produto> produtos = LerProdutosDoArquivo();
+            return await Task.FromResult(produtos.FirstOrDefault(p => p.Codigo == id));
+        }
+
+        public Task<IEnumerable<Produto>> ObterPorCategoria(int codigo)
+        {
+            //List<Produto> produtos = LerProdutosDoArquivo();
+            //return produtos.Where(p => p.CategoriaCodigo == codigo);
+            throw new NotImplementedException();
+        }
+
+        public void Adicionar(Produto novoproduto)
+        {
+            //List<Produto> produtos = new List<Produto>();
+            List<Produto> produtos = LerProdutosDoArquivo();
             int proximoCodigo = ObterProximoCodigoDisponivel();
-            produtos.Add(novoProduto);
+            produtos.Add(novoproduto);
             EscreverProdutosNoArquivo(produtos);
         }
 
-        public Produto BuscarPorId(int codigo)
+        public bool Atualizar(Produto produto)
         {
-            throw new NotImplementedException();
+            List<Produto> produtos = LerProdutosDoArquivo();
+            var produtoExistente = produtos.FirstOrDefault(p => p.Codigo == produto.Codigo);
+            if (produtoExistente != null)
+            {
+                produtoExistente.AlterarNome(produto.Nome);
+                produtoExistente.AlterarDescricao(produto.Descricao);
+                EscreverProdutosNoArquivo(produtos);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public IEnumerable<Produto> BuscarTodos()
+        public bool Deletar(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Produto> BuscarTodosAtivos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Produto> BuscarTodosInativos()
-        {
-            throw new NotImplementedException();
+            List<Produto> produtos = LerProdutosDoArquivo();
+            var produtoExistente = produtos.FirstOrDefault(p => p.Codigo == id);
+            if (produtoExistente != null)
+            {
+                produtos.Remove(produtoExistente);
+                EscreverProdutosNoArquivo(produtos);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         #endregion
 
-        #region Funções do arquivo
+        #region Métodos do arquivo
         private List<Produto> LerProdutosDoArquivo()
         {
             if (!System.IO.File.Exists(_produtoCaminhoArquivo))

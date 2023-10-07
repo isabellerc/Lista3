@@ -11,12 +11,13 @@ namespace GestaoDeProduto.Domain.Interfaces
   //ou seja aqui é só a assinatura do que o método faz e não executa
     public interface IProdutoRepository
     {
-        public void Adicionar(Produto novoProduto);
-        public Produto BuscarPorId(int codigo);
+        Task<IEnumerable<Produto>> ObterTodos();
+        Task<Produto> ObterPorId(int id);
+        Task<IEnumerable<Produto>> ObterPorCategoria(int codigo);
 
-        public IEnumerable<Produto> BuscarTodos();
-        public IEnumerable<Produto> BuscarTodosAtivos();
-        public IEnumerable<Produto> BuscarTodosInativos();
+        void Adicionar(Produto novoproduto);
+        bool Atualizar(Produto produto);
+        bool Deletar(int id);
 
 
     }

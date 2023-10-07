@@ -9,6 +9,12 @@ namespace LojaH1.Catalogo.Application.Interface
 {
     public interface IFornecedorService
     {
-        public void Adicionar(NovoFornecedorViewModel novoFornecedorViewModel);
+        Task<IEnumerable<FornecedorViewModel>> ObterTodos();
+        Task<FornecedorViewModel> ObterPorId(int id);
+        Task<IEnumerable<FornecedorViewModel>> ObterPorCategoria(int codigo);
+
+        void Adicionar(NovoFornecedorViewModel novoFornecedor);
+        bool Atualizar(NovoFornecedorViewModel novoFornecedor);
+        bool Deletar(int id);
     }
 }

@@ -9,6 +9,12 @@ namespace LojaH1.Catalogo.Application.Interface
 {
     public interface IProdutoService
     {
-        public void Adicionar(NovoProdutoViewModel novoProdutoViewModel);
+        Task<IEnumerable<ProdutoViewModel>> ObterTodos();
+        Task<ProdutoViewModel> ObterPorId(int id);
+        Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo);
+
+        void Adicionar(NovoProdutoViewModel novoProdutoViewModel);
+        bool Atualizar(NovoProdutoViewModel novoProdutoViewModel);
+        bool Deletar(int id);
     }
 }

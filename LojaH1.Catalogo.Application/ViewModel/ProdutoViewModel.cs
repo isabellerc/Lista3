@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace LojaH1.Catalogo.Application.ViewModel
 {
-    internal class ProdutoViewModel
+    public class ProdutoViewModel
     {
+        public int Codigo { get; set; }
+        public string Nome { get; set; }
+        public string Descricao { get; set; }
+        public bool Ativo { get; set; }
+        public decimal Valor { get; set; }
+        public DateTime DataCadastro { get; set; }
+        public int Estoque { get; set; }
     }
 }

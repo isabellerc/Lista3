@@ -10,12 +10,18 @@ namespace GestaoDeProduto.Domain.Etities
     {
 
         #region Construtores
+        //public Categoria(int codigo, string descricao)
+        //{
+        //    Codigo = codigo;
+        //    descricao = descricao;
+            
+        //}
         public Categoria(int codigo, string descricao)
         {
             Codigo = codigo;
-            descricao = descricao;
-            
+            Descricao = descricao;
         }
+
         #endregion
 
         #region Propriedades
@@ -25,6 +31,12 @@ namespace GestaoDeProduto.Domain.Etities
 
         #endregion
 
-       
+        #region Comportamentos
+        public void AlterarDescricao(string novaDescricao)
+        {
+            Descricao = novaDescricao;
+        }
+
+        #endregion
     }
 }

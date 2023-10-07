@@ -8,11 +8,11 @@ namespace LojaH1.Catalogo.Application.ViewModel
 {
     public class NovoFornecedorViewModel
     {
-        public int Codigo { get; private set; }
-        public string razaoSocial { get; private set; }
-        public string cnpj { get; private set; }
-        public DateTime DataCadastro { get; private set; }
-        public bool Ativo { get; private set; }
-        public string emailContato { get; private set; }
+        public int Codigo { get; set; }
+        public string RazaoSocial { get; set; }
+        public string CNPJ { get; set; }
+        public bool Ativo { get; set; }
+        public DateTime DataCadastro { get; set; }
+        public string EmailContato { get; set; }
     }
 }

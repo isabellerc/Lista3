@@ -16,43 +16,72 @@ namespace GestaoDeProduto.Data.Repositories
 
         public CategoriaRepository()
         {
-            _categoriaCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(),
-                "FileJsonData", "categoria.json");
+            _categoriaCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(), "FileJsonData", "categoria.json"); ;
         }
 
         #endregion
 
-        #region - Funções do repositorio
-        public void Adicionar(Categoria novaCategoria)
+        #region - Funções do arquivo
+        public Task<IEnumerable<Categoria>> ObterTodos()
         {
-            List<Categoria> categorias = new List<Categoria>();
+            List<Categoria> categorias = LerCategoriasDoArquivo();
+            return Task.FromResult<IEnumerable<Categoria>>(categorias);
+        }
+
+        public async Task<Categoria> ObterPorId(int id)
+        {
+            List<Categoria> categorias = LerCategoriasDoArquivo();
+            return await Task.FromResult(categorias.FirstOrDefault(p => p.Codigo == id));
+        }
+
+        public Task<IEnumerable<Categoria>> ObterPorCategoria(int codigo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Adicionar(Categoria categoria)
+        {
+            List<Categoria> categorias = LerCategoriasDoArquivo();
             int proximoCodigo = ObterProximoCodigoDisponivel();
-            categorias.Add(novaCategoria);
-            EscreverCategoriasNoArquivo(categorias);
+            categorias.Add(categoria);
+            EscreverCategoriaNoArquivo(categorias);
         }
 
-        public Categoria BuscarPorId(int codigo)
+        public bool Atualizar(Categoria categoria)
         {
-            throw new NotImplementedException();
+            List<Categoria> categorias = LerCategoriasDoArquivo();
+            var categoriaExistente = categorias.FirstOrDefault(p => p.Codigo == categoria.Codigo);
+            if (categoriaExistente != null)
+            {
+                categoriaExistente.AlterarDescricao(categoria.Descricao);
+
+                EscreverCategoriaNoArquivo(categorias);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public IEnumerable<Categoria> BuscarTodos()
+        public bool Deletar(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Categoria> BuscarTodosAtivos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Categoria> BuscarTodosInativos()
-        {
-            throw new NotImplementedException();
+            List<Categoria> categorias = LerCategoriasDoArquivo();
+            var categoriaExistente = categorias.FirstOrDefault(p => p.Codigo == id);
+            if (categoriaExistente != null)
+            {
+                categorias.Remove(categoriaExistente);
+                EscreverCategoriaNoArquivo(categorias);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         #endregion
 
-        #region Funções do arquivo
+        #region Métodos do arquivo
         private List<Categoria> LerCategoriasDoArquivo()
         {
             if (!System.IO.File.Exists(_categoriaCaminhoArquivo))
@@ -77,7 +106,7 @@ namespace GestaoDeProduto.Data.Repositories
             }
         }
 
-        private void EscreverCategoriasNoArquivo(List<Categoria> categorias)
+        private void EscreverCategoriaNoArquivo(List<Categoria> categorias)
         {
             string json = JsonConvert.SerializeObject(categorias);
             System.IO.File.WriteAllText(_categoriaCaminhoArquivo, json);
