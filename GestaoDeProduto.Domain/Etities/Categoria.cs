@@ -8,26 +8,20 @@ namespace GestaoDeProduto.Domain.Etities
 {
     public class Categoria
     {
-
         #region Construtores
-        //public Categoria(int codigo, string descricao)
-        //{
-        //    Codigo = codigo;
-        //    descricao = descricao;
-            
-        //}
-        public Categoria(int codigo, string descricao)
+        public Categoria(int codigo, string descricao, bool ativo)
         {
             Codigo = codigo;
             Descricao = descricao;
+            Ativo = ativo;
         }
 
         #endregion
 
         #region Propriedades
-
-        public int Codigo { get; private set; }
+        public int Codigo { get; set; }
         public string Descricao { get; private set; }
+        public bool Ativo { get; private set; }
 
         #endregion
 

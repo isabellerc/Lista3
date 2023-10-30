@@ -26,25 +26,45 @@ namespace LojaH1.Catalogo.Application.Services
         #endregion
 
         #region Funções
-        public void Adicionar(NovaCategoriaViewModel novaCategoriaViewModel)
+        public async Task Adicionar(NovaCategoriaViewModel novaCategoriaViewModel)
         {
             var novaCategoria = _mapper.Map<Categoria>(novaCategoriaViewModel);
-            _categoriaRepository.Adicionar(novaCategoria);
+            await _categoriaRepository.Adicionar(novaCategoria);
         }
 
-        public bool Atualizar(NovaCategoriaViewModel novaCategoriaViewModel)
+        public async Task AlterarDescricao(int id, string novaDescricao)
+        {
+            var buscaCategoria = await _categoriaRepository.ObterPorId(id);
+
+            if (buscaCategoria == null)
+            {
+                throw new ApplicationException("Não é possível alterar a descrição de uma categoria que não existe!");
+            }
+
+            buscaCategoria.AlterarDescricao(novaDescricao);
+
+            await _categoriaRepository.AlterarDescricao(buscaCategoria, novaDescricao);
+        }
+
+        //public bool Atualizar(NovaCategoriaViewModel novaCategoriaViewModel)
+        //{
+        //    var categoria = _mapper.Map<Categoria>(novaCategoriaViewModel);
+        //    bool atualizadoComSucesso = _categoriaRepository.Atualizar(categoria);
+
+        //    if (atualizadoComSucesso)
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        public async Task Atualizar(NovaCategoriaViewModel novaCategoriaViewModel)
         {
             var categoria = _mapper.Map<Categoria>(novaCategoriaViewModel);
-            bool atualizadoComSucesso = _categoriaRepository.Atualizar(categoria);
-
-            if (atualizadoComSucesso)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            await _categoriaRepository.Atualizar(categoria);
         }
 
         public bool Deletar(int id)
@@ -74,8 +94,9 @@ namespace LojaH1.Catalogo.Application.Services
 
         public async Task<IEnumerable<CategoriaViewModel>> ObterTodos()
         {
-            var categorias = await _categoriaRepository.ObterTodos();
-            return _mapper.Map<IEnumerable<CategoriaViewModel>>(categorias);
+            //var categorias = await _categoriaRepository.ObterTodos();
+            //return _mapper.Map<IEnumerable<CategoriaViewModel>>(categorias);
+            return _mapper.Map<IEnumerable<CategoriaViewModel>>(_categoriaRepository.ObterTodos());
         }
         #endregion
     }

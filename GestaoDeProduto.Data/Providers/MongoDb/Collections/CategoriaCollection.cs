@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LojaH1.Catalogo.Application.ViewModel
+namespace GestaoDeProduto.Data.Providers.MongoDb.Collections
 {
-    public class CategoriaViewModel
+    [BsonCollection("Categoria")]
+    public class CategoriaCollection : Document
     {
+        #region 2 - Propriedades
+        //public Guid CodigoId { get; set; }
         public int Codigo { get; set; }
         public string Descricao { get; set; }
         public bool Ativo { get; set; }
+
+        #endregion
     }
 }

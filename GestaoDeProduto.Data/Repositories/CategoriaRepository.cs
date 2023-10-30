@@ -1,4 +1,7 @@
-﻿using GestaoDeProduto.Domain.Etities;
+﻿using AutoMapper;
+using GestaoDeProduto.Data.Providers.MongoDb.Collections;
+using GestaoDeProduto.Data.Providers.MongoDb.Interfaces;
+using GestaoDeProduto.Domain.Etities;
 using GestaoDeProduto.Domain.Interfaces;
 using Newtonsoft.Json;
 using System;
@@ -11,8 +14,9 @@ namespace GestaoDeProduto.Data.Repositories
 {
     public class CategoriaRepository : ICategoriaRepository
     {
-        #region - Construtor
         private readonly string _categoriaCaminhoArquivo;
+
+        #region Construtores Json
 
         public CategoriaRepository()
         {
@@ -21,47 +25,130 @@ namespace GestaoDeProduto.Data.Repositories
 
         #endregion
 
-        #region - Funções do arquivo
-        public Task<IEnumerable<Categoria>> ObterTodos()
+        #region Construtor MongoDB
+
+        private readonly IMongoRepository<CategoriaCollection> _categoriaRepository;
+        private readonly IMapper _mapper;
+
+        public CategoriaRepository(IMongoRepository<CategoriaCollection> categoriaRepository, IMapper mapper)
         {
-            List<Categoria> categorias = LerCategoriasDoArquivo();
-            return Task.FromResult<IEnumerable<Categoria>>(categorias);
+            _categoriaRepository = categoriaRepository;
+            _mapper = mapper;
+        }
+
+        #endregion
+
+        #region Funções do Arquivo 
+        public IEnumerable<Categoria> ObterTodos()
+        {
+            //List<Categoria> categorias = LerCategoriasDoArquivo();
+            //return Task.FromResult<IEnumerable<Categoria>>(categorias);
+
+            var categoriaList = _categoriaRepository.FilterBy(filter => true);
+
+            List<Categoria> lista = new List<Categoria>();
+            foreach (var item in categoriaList)
+            {
+                lista.Add(new Categoria(item.Codigo, item.Descricao, item.Ativo));
+            }
+
+            //return _mapper.Map<IEnurable<Produto>>(produtoList);
+
+            return lista;
         }
 
         public async Task<Categoria> ObterPorId(int id)
         {
-            List<Categoria> categorias = LerCategoriasDoArquivo();
-            return await Task.FromResult(categorias.FirstOrDefault(p => p.Codigo == id));
+            //List<Categoria> categorias = LerCategoriasDoArquivo();
+            //return await Task.FromResult(categorias.FirstOrDefault(p => p.Codigo == id));
+
+            var buscaCategoria = _categoriaRepository.FilterBy(filter => filter.Codigo == id);
+            var categoria = _mapper.Map<Categoria>(buscaCategoria.FirstOrDefault());
+            return categoria;
         }
 
-        public Task<IEnumerable<Categoria>> ObterPorCategoria(int codigo)
+        public Task<IEnumerable<Categoria>> ObterPorCategoria(string nomeCategoria)
         {
             throw new NotImplementedException();
         }
 
-        public void Adicionar(Categoria categoria)
+        public async Task AlterarDescricao(Categoria categoria, string novaDescricao)
         {
-            List<Categoria> categorias = LerCategoriasDoArquivo();
-            int proximoCodigo = ObterProximoCodigoDisponivel();
-            categorias.Add(categoria);
-            EscreverCategoriaNoArquivo(categorias);
+            var buscaCategoria = _categoriaRepository.FilterBy(filter => filter.Codigo == categoria.Codigo);
+
+            var categoriaDescricao = buscaCategoria.FirstOrDefault();
+
+            categoriaDescricao.Descricao = categoria.Descricao;
+
+            await _categoriaRepository.ReplaceOneAsync(_mapper.Map<CategoriaCollection>(categoriaDescricao));
         }
 
-        public bool Atualizar(Categoria categoria)
-        {
-            List<Categoria> categorias = LerCategoriasDoArquivo();
-            var categoriaExistente = categorias.FirstOrDefault(p => p.Codigo == categoria.Codigo);
-            if (categoriaExistente != null)
-            {
-                categoriaExistente.AlterarDescricao(categoria.Descricao);
+        //public void Adicionar(Categoria categoria)
+        //{
+        //    List<Categoria> categorias = LerCategoriasDoArquivo();
+        //    int proximoCodigo = ObterProximoCodigoDisponivel();
+        //    categorias.Add(categoria);
+        //    EscreverCategoriaNoArquivo(categorias);
+        //}
 
-                EscreverCategoriaNoArquivo(categorias);
-                return true;
-            }
-            else
+        public async Task Adicionar(Categoria categoria)
+        {
+            //await _categoriaRepository.InsertOneAsync(_mapper.Map<CategoriaCollection>(categoria));
+
+            CategoriaCollection categoriaCollection = new CategoriaCollection();
+            categoriaCollection.Codigo = categoria.Codigo;
+            categoriaCollection.Descricao = categoria.Descricao;
+
+            await _categoriaRepository.InsertOneAsync(categoriaCollection);
+        }
+
+        //public Task Atualizar(Categoria categoria)
+        //{
+        //    List<Categoria> categorias = LerCategoriasDoArquivo();
+        //    var categoriaExistente = categorias.FirstOrDefault(p => p.Codigo == categoria.Codigo);
+        //    if (categoriaExistente != null)
+        //    {
+        //        categoriaExistente.AlterarDescricao(categoria.Descricao);
+
+        //        EscreverCategoriaNoArquivo(categorias);
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        //public async Task Atualizar(Categoria categoria)
+        //{
+        //    var buscaCategoria = _categoriaRepository.FilterBy(filter => filter.Codigo == categoria.Codigo);
+        //    var categoriaAtualizar = buscaCategoria.FirstOrDefault();
+
+        //    if (categoriaAtualizar == null)
+        //    {
+        //        throw new ApplicationException("Produto não encontrado.");
+        //    }
+
+        //    categoriaAtualizar.Codigo = categoria.Codigo;
+        //    categoriaAtualizar.Descricao = categoria.Descricao;
+
+        //    await _categoriaRepository.ReplaceOneAsync(_mapper.Map<CategoriaCollection>(categoriaAtualizar));
+        //}
+
+        public async Task Atualizar(Categoria categoria)
+        {
+            var buscaFornecedor = _categoriaRepository.FilterBy(filter => filter.Codigo == categoria.Codigo);
+            var fornecedorAtualizar = buscaFornecedor.FirstOrDefault();
+
+            if (fornecedorAtualizar == null)
             {
-                return false;
+                throw new ApplicationException("Produto não encontrado.");
             }
+
+            fornecedorAtualizar.Codigo = categoria.Codigo;
+            fornecedorAtualizar.Descricao = categoria.Descricao;
+
+            await _categoriaRepository.ReplaceOneAsync(_mapper.Map<CategoriaCollection>(fornecedorAtualizar));
         }
 
         public bool Deletar(int id)
@@ -81,7 +168,8 @@ namespace GestaoDeProduto.Data.Repositories
         }
         #endregion
 
-        #region Métodos do arquivo
+        #region Métodos do Arquivo
+
         private List<Categoria> LerCategoriasDoArquivo()
         {
             if (!System.IO.File.Exists(_categoriaCaminhoArquivo))

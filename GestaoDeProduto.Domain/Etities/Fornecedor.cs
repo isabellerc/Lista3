@@ -8,28 +8,26 @@ namespace GestaoDeProduto.Domain.Etities
 {
     public class Fornecedor
     {
-
         #region Construtores
-        //public Fornecedor(int codigo, string razaoSocial, string cnpj, DateTime dataCadastro, bool ativo, string emailContato)
-        //{
-        //    Codigo = codigo;
-        //    razaoSocial = razaoSocial;
-        //    cnpj = cnpj;
-        //    DataCadastro = dataCadastro;
-        //    Ativo = ativo;
-        //    emailContato = emailContato;
-        //}
-        public Fornecedor(int codigo, string razaoSocial, string cnpj, DateTime dataCadastro, bool ativo, string emailContato)
+
+        public Fornecedor(int codigo, string razaoSocial, string cNPJ, bool ativo, DateTime dataCadastro, string emailContato)
         {
             Codigo = codigo;
             RazaoSocial = razaoSocial;
-            Cnpj = cnpj;
-            DataCadastro = dataCadastro;
+            CNPJ = cNPJ;
             Ativo = ativo;
+            DataCadastro = dataCadastro;
             EmailContato = emailContato;
         }
 
-
+        //public Fornecedor(string razaoSocial, string cNPJ, bool ativo, DateTime dataCadastro, string emailContato)
+        //{
+        //    RazaoSocial = razaoSocial;
+        //    CNPJ = cNPJ;
+        //    Ativo = ativo;
+        //    DataCadastro = dataCadastro;
+        //    EmailContato = emailContato;
+        //}
 
         #endregion
 
@@ -37,9 +35,9 @@ namespace GestaoDeProduto.Domain.Etities
 
         public int Codigo { get; private set; }
         public string RazaoSocial { get; private set; }
-        public string Cnpj { get; private set; }
-        public DateTime DataCadastro { get; private set; }
+        public string CNPJ { get; private set; }
         public bool Ativo { get; private set; }
+        public DateTime DataCadastro { get; private set; }
         public string EmailContato { get; private set; }
 
         #endregion
@@ -67,6 +65,5 @@ namespace GestaoDeProduto.Domain.Etities
 
 
         #endregion
-
     }
 }
