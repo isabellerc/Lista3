@@ -11,11 +11,12 @@ namespace GestaoDeProduto.Data.AutoMapper
 {
     public class DomainToCollection : Profile
     {
-        public DomainToCollection()
-        {
-            CreateMap<Produto, ProdutoCollection>();
-            CreateMap<Fornecedor, FornecedorCollection>();
-            CreateMap<Categoria, CategoriaCollection>();
-        }
-    }
+		public DomainToCollection()
+		{
+			CreateMap<Produto, ProdutoCollection>();
+			CreateMap<Categoria, CategoriaCollection>();
+			CreateMap<Fornecedor, FornecedorCollection>();
+			CreateMap<Usuario, UsuarioCollection>();
+		}
+	}
 }

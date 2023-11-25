@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace GestaoDeProduto.Data.Providers.MongoDb.Collections
 {
-	[BsonCollection("Categoria")]
-	public class CategoriaCollection : Document
+	[BsonCollection("Usuario")]
+	public class UsuarioCollection : Document
 	{
-		#region 2 - Propriedades
-
-		public Guid CodigoId { get; set; }
-		public string Descricao { get; set; }
+		public string Login { get; set; }
+		public string Senha { get; set; }
 		public bool Ativo { get; set; }
-
-		#endregion
 	}
 }

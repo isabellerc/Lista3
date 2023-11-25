@@ -17,6 +17,7 @@
     <ProjectReference Include="..\GestaoDeProduto.Data\GestaoDeProduto.Data.csproj" />
     <ProjectReference Include="..\GestaoDeProduto.Domain\GestaoDeProduto.Domain.csproj" />
     <ProjectReference Include="..\LojaH1.Catalogo.Application\LojaH1.Catalogo.Application.csproj" />
+    <ProjectReference Include="..\LojaH1.Catalogo.Infra\LojaH1.Catalogo.Infra.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace GestaoDeProduto.Domain.Etities
 {
-    //public abstract class EntidadeBase
-    //{
-    //    public Guid codigoid { get; set; }
+	public abstract class EntidadeBase
+	{
+		public Guid CodigoId { get; set; }
 
-    //    protected EntidadeBase()
-    //    {
-    //        codigoid = Guid.NewGuid();
-    //    }
+		protected EntidadeBase()
+		{
+			CodigoId = Guid.NewGuid();
+		}
 
-    //}
+	}
 }

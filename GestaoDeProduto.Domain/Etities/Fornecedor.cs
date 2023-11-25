@@ -6,64 +6,49 @@ using System.Threading.Tasks;
 
 namespace GestaoDeProduto.Domain.Etities
 {
-    public class Fornecedor
-    {
-        #region Construtores
+	//fornecedor nao herda nada?
+	public class Fornecedor
+	{
+		#region Construtor
 
-        public Fornecedor(int codigo, string razaoSocial, string cNPJ, bool ativo, DateTime dataCadastro, string emailContato)
-        {
-            Codigo = codigo;
-            RazaoSocial = razaoSocial;
-            CNPJ = cNPJ;
-            Ativo = ativo;
-            DataCadastro = dataCadastro;
-            EmailContato = emailContato;
-        }
+		public Fornecedor(string nome, string cnpj, string razaoSocial, DateTime dataCadastro, bool ativo)
+		{
+			Nome = nome;
+			Cnpj = cnpj;
+			RazaoSocial = razaoSocial;
+			DataCadastro = dataCadastro;
+			Ativo = ativo;
+		}
 
-        //public Fornecedor(string razaoSocial, string cNPJ, bool ativo, DateTime dataCadastro, string emailContato)
-        //{
-        //    RazaoSocial = razaoSocial;
-        //    CNPJ = cNPJ;
-        //    Ativo = ativo;
-        //    DataCadastro = dataCadastro;
-        //    EmailContato = emailContato;
-        //}
+		#endregion
 
-        #endregion
+		#region propriedades
 
-        #region Propriedades
-
-        public int Codigo { get; private set; }
-        public string RazaoSocial { get; private set; }
-        public string CNPJ { get; private set; }
-        public bool Ativo { get; private set; }
-        public DateTime DataCadastro { get; private set; }
-        public string EmailContato { get; private set; }
-
-        #endregion
-
-        #region Comportamentos
-        public void Ativar()
-        {
-            Ativo = true;
-        }
-
-        public void Desativar()
-        {
-            Ativo = false;
-        }
-
-        public void AlterarRazaoSocial(string novaRazaoSocial)
-        {
-            RazaoSocial = novaRazaoSocial;
-        }
-
-        public void AlterarEmailContato(string novoEmailContato)
-        {
-            EmailContato = novoEmailContato;
-        }
+		public string Nome { get; private set; }
+		public string Cnpj { get; private set; }
+		public string RazaoSocial { get; private set; }
+		public DateTime DataCadastro { get; private set; }
+		public bool Ativo { get; private set; }
 
 
-        #endregion
-    }
+		#endregion
+
+		#region comportamentos
+
+		public void Ativar() => Ativo = true;
+
+		public void Desativar() => Ativo = false;
+
+		public void AlterarNome(string nome) => Nome = nome;
+		public void AlterarRazaoSocial(string razaoSocial) => RazaoSocial = razaoSocial;
+		public void AlterarCNPJ(string cnpj) => Cnpj = cnpj;
+
+		public object AlterarEmailContato(string novoEmail)
+		{
+			throw new NotImplementedException();
+		}
+
+
+		#endregion
+	}
 }

@@ -8,83 +8,31 @@ namespace LojaH1.Catalogo.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CategoriaController : ControllerBase
-    {
-        private readonly ICategoriaService _categoriaService;
+	public class CategoriaController : ControllerBase
+	{
+		private readonly ICategoriaService _categoriaService;
+		public CategoriaController(ICategoriaService categoriaService)
+		{
+			_categoriaService = categoriaService;
+		}
 
-        public CategoriaController(ICategoriaService categoriaService)
-        {
-            _categoriaService = categoriaService;
-        }
+		[HttpPost]
+		[Route("Adicionar")]
+		public async Task<IActionResult> Post(NovaCategoriaViewModel categoriaViewModel)
+		{
+			await _categoriaService.Adicionar(categoriaViewModel);
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
-        {
-            var categorias = await _categoriaService.ObterTodos();
-            return Ok(categorias);
-        }
+			return Ok();
+		}
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var categoria = await _categoriaService.ObterPorId(id);
-            return Ok(categoria);
-        }
 
-        [HttpPost]
-        public IActionResult Post(NovaCategoriaViewModel novoFornecedorViewModel)
-        {
-            _categoriaService.Adicionar(novoFornecedorViewModel);
-            return Ok("Registro adicionado com sucesso!");
-        }
 
-        //[HttpPut("{id}")]
-        //public IActionResult Put(int id, NovaCategoriaViewModel novaCategoriaViewModel)
-        //{
-        //    novaCategoriaViewModel.Codigo = id;
-        //    bool atualizadoComSucesso = _categoriaService.Atualizar(novaCategoriaViewModel);
-
-        //    if (atualizadoComSucesso)
-        //    {
-        //        return Ok("Registro atualizado com sucesso!");
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Registro inexistente ou não pôde ser atualizado.");
-        //    }
-        //}
-
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, NovaCategoriaViewModel novoCategoriaViewModel)
-        {
-            novoCategoriaViewModel.Codigo = id;
-            _categoriaService.Atualizar(novoCategoriaViewModel);
-
-            return Ok("Registro atualizado com sucesso!");
-        }
-
-        [HttpPut("AtualizarRazaoSocial/{id}/{novaDescricao}")]
-        public async Task<IActionResult> AlterarDescricao(int id, string novaDescricao)
-        {
-            await _categoriaService.AlterarDescricao(id, novaDescricao);
-
-            return Ok("Descrição da categoria alterada com sucesso");
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            bool excluidoComSucesso = _categoriaService.Deletar(id);
-
-            if (excluidoComSucesso)
-            {
-                return Ok("Registro excluído com sucesso!");
-            }
-            else
-            {
-                return NotFound("Registro não encontrado ou não pôde ser excluído.");
-            }
-        }
-    }
+		[HttpGet]
+		[Route("ObterTodos")]
+		public IActionResult Get()
+		{
+			return Ok(_categoriaService.ObterTodos());
+		}
+	}
 }
         

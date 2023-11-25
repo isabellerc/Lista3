@@ -134,6 +134,11 @@ namespace LojaH1.Catalogo.Application.Services
         {
             return _mapper.Map<IEnumerable<ProdutoViewModel>>(_produtoRepository.ObterTodos());
         }
-        #endregion
-    }
+
+		public Task Desativar(Guid id)
+		{
+			throw new NotImplementedException();
+		}
+		#endregion
+	}
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace LojaH1.Catalogo.Application.ViewModel
 {
-    public class CategoriaViewModel
-    {
-		public Guid CodigoId { get; set; }
-		public string Descricao { get; set; }
-		public bool Ativo { get; set; }
+	public class AutenticarUsuarioViewModel
+	{
+		public string Login { get; set; }
+		public string Senha { get; set; }
+
 	}
 }

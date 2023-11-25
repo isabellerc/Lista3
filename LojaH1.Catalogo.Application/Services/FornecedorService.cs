@@ -41,7 +41,7 @@ namespace LojaH1.Catalogo.Application.Services
                 throw new ApplicationException("Não é possível alterar o email de um fornecedor que não existe!");
             }
 
-            buscaFornecedor.AlterarEmailContato(novoEmail);
+			object value = buscaFornecedor.AlterarEmailContato(novoEmail);
 
             await _fornecedorRepository.AlterarEmailContato(buscaFornecedor, novoEmail);
         }

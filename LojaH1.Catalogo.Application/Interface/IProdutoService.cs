@@ -19,5 +19,6 @@ namespace LojaH1.Catalogo.Application.Interface
         Task Desativar(int id);
         Task AlterarPreco(int id, decimal valor);
         Task AtualizarEstoque(int id, int quantidade);
-    }
+		Task Desativar(Guid id);
+	}
 }

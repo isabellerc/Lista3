@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens
 		QuestoesTeoricas.txt = QuestoesTeoricas.txt
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Infra", "5 - Infra", "{C3CCA1DD-AE5B-4F9E-851D-98B4BE3C7D14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LojaH1.Catalogo.Infra", "LojaH1.Catalogo.Infra\LojaH1.Catalogo.Infra.csproj", "{5AE42BCA-7CDB-417C-AB9E-CDCB7A3499A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +48,10 @@ Global
 		{DA926E98-D63D-4CAA-872A-517BB27D2508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA926E98-D63D-4CAA-872A-517BB27D2508}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA926E98-D63D-4CAA-872A-517BB27D2508}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE42BCA-7CDB-417C-AB9E-CDCB7A3499A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE42BCA-7CDB-417C-AB9E-CDCB7A3499A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE42BCA-7CDB-417C-AB9E-CDCB7A3499A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE42BCA-7CDB-417C-AB9E-CDCB7A3499A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{1D271E7D-30F2-40DA-B64F-701156FDEDA1} = {E7FC7092-4E2F-4596-A116-43350E3E9381}
 		{0DEAF1AE-32C0-4270-8871-550FAB75C337} = {642977D5-0887-43D3-8316-06292145932D}
 		{8FF1B816-5565-4D32-BE24-2335EA7A9220} = {57B07ECB-9C63-4C49-815F-ECBEDBC01AE3}
+		{5AE42BCA-7CDB-417C-AB9E-CDCB7A3499A1} = {C3CCA1DD-AE5B-4F9E-851D-98B4BE3C7D14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31F3A8BE-6724-48CA-9C06-DDCC21C727B5}
