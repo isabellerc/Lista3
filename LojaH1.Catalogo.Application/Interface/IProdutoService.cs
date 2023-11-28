@@ -9,6 +9,7 @@ namespace LojaH1.Catalogo.Application.Interface
 {
     public interface IProdutoService
     {
+        //Task<IEnumerable<ProdutoViewModel>> ObterTodos();
         IEnumerable<ProdutoViewModel> ObterTodos();
         Task<ProdutoViewModel> ObterPorId(int id);
         Task<IEnumerable<ProdutoViewModel>> ObterPorNome(string produtoNome);
@@ -19,6 +20,6 @@ namespace LojaH1.Catalogo.Application.Interface
         Task Desativar(int id);
         Task AlterarPreco(int id, decimal valor);
         Task AtualizarEstoque(int id, int quantidade);
-		Task Desativar(Guid id);
-	}
+        Task AlterarEstoqueMinimo(int id, int quantidade);
+    }
 }

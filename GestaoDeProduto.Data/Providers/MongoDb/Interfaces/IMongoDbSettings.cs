@@ -12,10 +12,4 @@ namespace GestaoDeProduto.Data.Providers.MongoDb.Interfaces
         string ConnectionString { get; set; }
     }
 
-    //ADC DEPOIS NAO SEI SE ESTÁ CERTO:
-    //public class MongoDbSettings : IMongoDbSettings
-    //{
-    //    public string DatabaseName { get; set; }
-    //    public string ConnectionString { get; set; }
-    //}
 }

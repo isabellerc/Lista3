@@ -8,8 +8,7 @@ namespace LojaH1.Catalogo.Application.ViewModel
 {
     public class CategoriaViewModel
     {
-		public Guid CodigoId { get; set; }
-		public string Descricao { get; set; }
-		public bool Ativo { get; set; }
-	}
+        public int Codigo { get; set; }
+        public string Descricao { get; set; }
+    }
 }

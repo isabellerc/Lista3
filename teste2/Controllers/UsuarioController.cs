@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GestaoDeProduto.Domain.Interfaces;
 //using H1Store.Catalogo.Application.Interfaces;
 //using H1Store.Catalogo.Application.ViewModels;
 //using H1Store.Catalogo.Infra.Autenticacao;
@@ -11,26 +12,37 @@ namespace H1Store.Catalogo.API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	public class UsuarioController : ControllerBase
-	{
-		private readonly ITokenService _tokenService;
-		private readonly IUsuarioService _usuarioService;
-		private readonly IMapper _mapper;
+    public class UsuarioController : Controller
+    {
+        private readonly IUsuarioRepository _usuarioRepository;
+        private IMapper _mapper;
 
-		public UsuarioController(IUsuarioService usuarioService, IMapper mapper,
-			 ITokenService tokenService)
-		{
-			_usuarioService = usuarioService;
-			_mapper = mapper;
-			_tokenService = tokenService;
-		}
+        public UsuarioController(IUsuarioRepository usuarioRepository, IMapper mapper)
+        {
+            _usuarioRepository = usuarioRepository;
+            _mapper = mapper;
+        }
 
-		[HttpPost]
-		public async Task<IActionResult> Autenticar(AutenticarUsuarioViewModel autenticarUsuarioViewModel)
-		{
-			var token = await _usuarioService.Autenticar(autenticarUsuarioViewModel);
+        //[HttpPost]
+        //[Route("login")]
+        //public async Task<ActionResult<dynamic>> Autenticar([FromBody] UsuarioViewModel usuarioViewModel)
+        //{
+        //    var buscarUsuario = _usuarioRepository.Autenticar(_mapper.Map<Usuario>(usuarioViewModel));
 
-			return Ok(token);
-		}
-	}
+        //    if (buscarUsuario == null)
+        //    {
+        //        return NotFound(new { message = "Usuário não existe e/ou senha inválida" });
+        //    }
+
+        //    var token = TokenService.GenerateToken(buscarUsuario);
+
+        //    buscarUsuario = "";
+
+        //    return new
+        //    {
+        //        usuario = buscarUsuario,
+        //        token = token
+        //    };
+        //}
+    }
 }

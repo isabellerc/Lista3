@@ -11,24 +11,20 @@ namespace LojaH1.Catalogo.Application.AutoMapper
 {
     public class ApplicationToDomain : Profile
     {
-		public ApplicationToDomain()
-		{
+        public ApplicationToDomain()
+        {
 
-			CreateMap<ProdutoViewModel, Produto>()
-			   .ConstructUsing(q => new Produto(q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Imagem, q.QuantidadeEstoque));
+            //CreateMap<ProdutoViewModel, Produto>()
+            //   .ConstructUsing(q => new Produto(q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Estoque));
 
-			CreateMap<NovoProdutoViewModel, Produto>()
-			   .ConstructUsing(q => new Produto(q.Nome, q.Descricao, q.Ativo, q.Valor, q.DataCadastro, q.Imagem, q.QuantidadeEstoque));
+            CreateMap<NovoProdutoViewModel, Produto>()
+               .ConstructUsing(q => new Produto(q.Codigo, q.Nome, q.Descricao, q.Ativo, q.Valor, DateTime.Now, q.Estoque, q.EstoqueMinimo));
 
-			CreateMap<FornecedorViewModel, Fornecedor>()
-				.ConstructUsing(f => new Fornecedor(f.Nome, f.Cnpj, f.RazaoSocial, f.DataCadastro, f.Ativo));
+            CreateMap<NovoFornecedorViewModel, Fornecedor>()
+               .ConstructUsing(q => new Fornecedor(q.Codigo, q.RazaoSocial, q.CNPJ, q.Ativo, DateTime.Now, q.EmailContato));
 
-			CreateMap<NovoFornecedorViewModel, Fornecedor>()
-				.ConstructUsing(f => new Fornecedor(f.Nome, f.Cnpj, f.RazaoSocial, DateTime.Now, true));
-
-
-
-
-		}
-	}
+            CreateMap<NovaCategoriaViewModel, Categoria>()
+                .ConstructUsing(q => new Categoria(q.Codigo, q.Descricao));
+        }
+    }
 }

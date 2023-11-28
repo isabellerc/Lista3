@@ -10,7 +10,5 @@ namespace LojaH1.Catalogo.Application.ViewModel
     {
         public int Codigo { get; set; }
         public string Descricao { get; set; }
-        public bool Ativo { get; set; }
-
     }
 }

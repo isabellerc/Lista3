@@ -7,35 +7,30 @@ using System.Threading.Tasks;
 namespace GestaoDeProduto.Domain.Etities
 
 {
-	public class Categoria : EntidadeBase
-	{
-		#region construtor
-		public Categoria(string descricao, bool ativo)
-		{
-			Descricao = descricao;
-			Ativo = ativo;
-		}
+    public class Categoria
+    {
+        #region Construtores
+        public Categoria(int codigo, string descricao)
+        {
+            Codigo = codigo;
+            Descricao = descricao;
+        }
 
-		public Categoria(Guid codigoId, string descricao, bool ativo)
-		{
-			CodigoId = codigoId;
-			Descricao = descricao;
-			Ativo = ativo;
-		}
-		#endregion
+        #endregion
 
-		#region propriedades
-		public string Descricao { get; private set; }
-		public bool Ativo { get; private set; }
-		#endregion
+        #region Propriedades
 
-		#region comportamentos
+        public int Codigo { get; private set; }
+        public string Descricao { get; private set; }
 
-		public void AlterarDescricao(string descricao) => Descricao = descricao;
-		public void Ativar() => Ativo = true;
+        #endregion
 
-		public void Desativar() => Ativo = false;
+        #region Comportamentos
+        public void AlterarDescricao(string novaDescricao)
+        {
+            Descricao = novaDescricao;
+        }
 
-		#endregion
-	}
+        #endregion
+    }
 }

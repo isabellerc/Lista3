@@ -20,6 +20,7 @@ using GestaoDeProduto.Domain.Interfaces;
 using LojaH1.Catalogo.Application.AutoMapper;
 using LojaH1.Catalogo.Application.Interface;
 using LojaH1.Catalogo.Application.Services;
+using LojaH1.Catalogo.Infra.EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(DomainToApplication), typeof(ApplicationToDomain));
 
 builder.Services.AddAutoMapper(typeof(DomainToCollection), typeof(CollectionToDomain));
+builder.Services.AddScoped<EmailService>();
+
 
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
@@ -50,6 +53,12 @@ builder.Services.AddSingleton<IMongoDbSettings>(serviceProvider =>
        serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
 
 builder.Services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+
+
+
+builder.Services.Configure<EmailConfig>(builder.Configuration.GetSection("EmailConfig"));
+
+
 
 var app = builder.Build();
 

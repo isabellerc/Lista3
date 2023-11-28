@@ -11,33 +11,27 @@ using System.Threading.Tasks;
 
 namespace GestaoDeProduto.Data.Repositories
 {
-	public class UsuarioRepository : IUsuarioRepository
-	{
+    public class UsuarioRepository : IUsuarioRepository
+    {
+        private readonly IMongoRepository<UsuarioCollection> _usuarioRepository;
+        private readonly IMapper _mapper;
 
-		private readonly IMongoRepository<UsuarioCollection> _usuarioRepository;
-		private readonly IMapper _mapper;
-		public UsuarioRepository(
-			IMongoRepository<UsuarioCollection> usuarioRepository,
-			IMapper mapper
-		)
-		{
-			_usuarioRepository = usuarioRepository;
-			_mapper = mapper;
-		}
+        public UsuarioRepository(IMongoRepository<UsuarioCollection> usuarioRepository, IMapper mapper)
+        {
+            _usuarioRepository = usuarioRepository;
+            _mapper = mapper;
+        }
 
-		public async Task<Usuario> Autenticar(string login, string senha)
-		{
-			var usuarioCollection = await _usuarioRepository.FindOneAsync(filtro =>
-						filtro.Login == login && filtro.Senha == senha);
-			return _mapper.Map<Usuario>(usuarioCollection);
+        public async Task<Usuario> Autenticar(string login, string senha)
+        {
+            var buscaUsuario = await _usuarioRepository.FindOneAsync(filtro => filtro.Login == login && filtro.Senha == senha);
 
+            return _mapper.Map<Usuario>(buscaUsuario);
+        }
 
-		}
-
-		public async Task Cadastrar(Usuario novoUsuario)
-		{
-			var novoUsuarioCollection = _mapper.Map<UsuarioCollection>(novoUsuario);
-			await _usuarioRepository.InsertOneAsync(novoUsuarioCollection);
-		}
-	}
+        public async Task Cadastrar(Usuario novoUsuario)
+        {
+            await _usuarioRepository.InsertOneAsync(_mapper.Map<UsuarioCollection>(novoUsuario));
+        }
+    }
 }
