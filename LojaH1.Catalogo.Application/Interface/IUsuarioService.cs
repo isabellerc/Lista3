@@ -9,8 +9,7 @@ namespace LojaH1.Catalogo.Application.Interface
 {
 	public interface IUsuarioService
 	{
-		//talvez descomentar:
-		//public Task<string> Autenticar(AutenticarUsuarioViewModel autenticarUsuarioViewModel);
-		//public Task Cadastrar(UsuarioViewModel usuario);
-	}
+        public Task<string> Autenticar(AutenticarUsuarioViewModel autenticarUsuarioViewModel);
+        public Task Cadastrar(AutenticarUsuarioViewModel usuario);
+    }
 }

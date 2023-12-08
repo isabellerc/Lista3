@@ -12,37 +12,37 @@ namespace H1Store.Catalogo.API.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-    public class UsuarioController : Controller
+    public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioRepository _usuarioRepository;
-        private IMapper _mapper;
+        private readonly ITokenService _tokenService;
+        private readonly IUsuarioService _usuarioService;
+        private readonly IMapper _mapper;
 
-        public UsuarioController(IUsuarioRepository usuarioRepository, IMapper mapper)
+        public UsuarioController(IUsuarioService usuarioService, IMapper mapper,
+             ITokenService tokenService)
         {
-            _usuarioRepository = usuarioRepository;
+            _usuarioService = usuarioService;
             _mapper = mapper;
+            _tokenService = tokenService;
         }
 
-        //[HttpPost]
-        //[Route("login")]
-        //public async Task<ActionResult<dynamic>> Autenticar([FromBody] UsuarioViewModel usuarioViewModel)
-        //{
-        //    var buscarUsuario = _usuarioRepository.Autenticar(_mapper.Map<Usuario>(usuarioViewModel));
+        [HttpPost]
+        [Route("/Autenticar")]
+        public async Task<IActionResult> Autenticar(AutenticarUsuarioViewModel autenticarUsuarioViewModel)
+        {
+            var token = await _usuarioService.Autenticar(autenticarUsuarioViewModel);
 
-        //    if (buscarUsuario == null)
-        //    {
-        //        return NotFound(new { message = "Usuário não existe e/ou senha inválida" });
-        //    }
+            return Ok(token);
+        }
 
-        //    var token = TokenService.GenerateToken(buscarUsuario);
+        [HttpPost]
+        [Route("/Cadastrar")]
+        public async Task<IActionResult> CadastrarUsuario(AutenticarUsuarioViewModel UsuarioViewModel)
+        {
+            await _usuarioService.Cadastrar(UsuarioViewModel);
 
-        //    buscarUsuario = "";
+            return Ok("Cadastrado Com sucesso!!");
+        }
 
-        //    return new
-        //    {
-        //        usuario = buscarUsuario,
-        //        token = token
-        //    };
-        //}
     }
 }
